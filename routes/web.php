@@ -12,11 +12,15 @@
 */
 
 Route::get('/', function () {
+    return view('welcome');
+    // $items = ['apple', 'banana', 'tomato'];
+    //
+    // return view('welcome', ['items' => $items]);
     // return view('errors.503');
-    return view('welcome')->with([
-        'name' => 'Foo',
-        'greeting' => 'Hi?',
-    ]);
+    // return view('welcome')->with([
+    //     'name' => 'Foo',
+    //     'greeting' => 'Hi?',
+    // ]);
 });
 // Route::get('/', function () {
 //     // return '<h1>Laravel</h1>';
