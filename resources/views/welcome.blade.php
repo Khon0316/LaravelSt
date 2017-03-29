@@ -81,6 +81,7 @@
                 <div class="title m-b-md">
                     Laravel 5
                 </div>
+                <h1><?= isset($greeting) ? "{$greeting} " : 'Hello ';?><?= $name; ?></h1>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
