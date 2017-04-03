@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'WelcomeController@index');
+Route::resource('articles', 'ArticlesController');
+// Route::get('/', function () {
+    // return view('welcome');
     // $items = ['apple', 'banana', 'tomato'];
     //
     // return view('welcome', ['items' => $items]);
@@ -21,7 +23,7 @@ Route::get('/', function () {
     //     'name' => 'Foo',
     //     'greeting' => 'Hi?',
     // ]);
-});
+// });
 // Route::get('/', function () {
 //     // return '<h1>Laravel</h1>';
 //     return view('welcome');
