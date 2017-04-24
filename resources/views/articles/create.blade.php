@@ -17,9 +17,7 @@
 
             <div class="form-group {{ $errors->has('content') ? 'has-error' : '' }}">
                 <label for="content">Content</label>
-                <textarea name="content" id="content" rows="10" class="form-control">
-                    {{ old('content') }}
-                </textarea>
+                <textarea name="content" id="content" rows="10" class="form-control">{{ old('content') }}</textarea>
                 {!! $errors->first('content', '<span class="form-error">:message</span>') !!}
             </div>
 

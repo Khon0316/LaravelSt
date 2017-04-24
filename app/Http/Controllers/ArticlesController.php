@@ -71,6 +71,8 @@ class ArticlesController extends Controller
             return back()->with('flash_message', 'Content Save not')->withInput();
         }
 
+        event(new \App\Events\ArticlesEvent($article));
+
         return redirect(route('articles.index'))->with('flash_message', 'Content Save');
         // return __METHOD__ . '은(는) 사용자의 입력한 폼 데이터로 새로운 Article 컬렉션을 만듭니다.';
     }
