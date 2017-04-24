@@ -10,6 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('mail', function() {
+    $article = App\Article::with('user')->find(1);
+
+    // return view('emails.articles.created', compact('article'));
+    return Mail::send(
+        // 'emails.articles.created',
+        ['text' => 'emails.articles.created-text'],
+        compact('article'),
+        function ($message) use ($article) {
+            $message->to('kimhoon0316@gmail.com');
+            $message->subject('새 글이 등록되었습니다 - ' . $article->title);
+            // $message->attach(storage_path('elephant.png'));
+        }
+    );
+});
 
 Route::get('/', 'WelcomeController@index');
 Route::resource('articles', 'ArticlesController');
