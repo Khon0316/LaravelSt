@@ -50,7 +50,7 @@ Route::get('mail', function() {
     );
 });
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'HomeController@index');
 Route::resource('articles', 'ArticlesController');
 
 // Event::listen('article.created', function ($article) {
