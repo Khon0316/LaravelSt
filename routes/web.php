@@ -14,6 +14,10 @@
 /* 라라벨 내장 인증에서 설치한 라우트 삭제 */
 // Auth::routes();
 
+Route::get('/', function () {
+    return view('home');
+});
+
 /* 사용자 가입 */
 Route::get('auth/register', [
     'as' => 'users.create',
@@ -65,4 +69,10 @@ Route::get('auth/reset/{token}', [
 Route::post('auth/reset', [
     'as' => 'reset.store',
     'uses' => 'PasswordsController@postReset'
+]);
+
+/* Social Login */
+Route::get('social/{provider}', [
+    'as' => 'social.login',
+    'uses' => 'SocialController@execute',
 ]);

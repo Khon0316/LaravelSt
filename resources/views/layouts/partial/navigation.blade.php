@@ -36,13 +36,13 @@
 
             <ul class="dropdown-menu" role="menu">
               <li>
-                <a href="{{ url('/logout') }}"
+                <a href="{{ route('sessions.destroy') }}"
                    onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
                   Logout
                 </a>
 
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('sessions.destroy') }}" method="POST" style="display: none;">
                   {{ csrf_field() }}
                 </form>
               </li>

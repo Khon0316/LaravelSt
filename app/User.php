@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class);
     }
+
+    public function scopeSocialUser($query, $email)
+    {
+        return $query->whereEamil($email)->whereNull('password');
+    }
 }

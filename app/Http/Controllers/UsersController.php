@@ -16,35 +16,26 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function createNativeAccount(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-
-        $confirmCode = str_random(60);
-
         $user = \App\User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
         ]);
 
-        // \Mail::send('emails.auth.confirm', compact('user'), function ($message) use ($user) {
-        //     $message->to($user->email);
-        //     $message->subject(
-        //         sprintf('[%s] 회원 가입을 확인해 주세요.', config('app.name'))
-        //     );
-        // });
         event(new \App\Events\UserCreated($user));
 
-        // flash('가입하신 메일 계정으로 가입 확인 메일을 보내드렸습니다. 가입 확인하시고 로그인해 주세요.');
-
-        // return redirect('/');
-
         return $this->respondCreated('가입하신 메일 계정으로 가입 확인 메일을 보내드렸습니다. 가입 확인하시고 로그인해 주세요.');
+    }
+
+    public function store(Request $request)
+    {
+        if ($socialUser = \App\User::socialUser($request->get('email'))->first()) {
+            return $this->updateSocialAccount($request, $socialUser);
+        }
+
+        return $this->createNativeAccount($request);
     }
 
     public function confirm($code)
@@ -72,5 +63,23 @@ class UsersController extends Controller
         flash($message);
 
         return redirect('/');
+    }
+
+    protected function updateSocialAccount(Request $request, \App\User $user)
+    {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $user->update([
+            'name' => $request->input('name'),
+            'password' => bcrypt($request->input('password'))
+        ]);
+
+        auth()->login($user);
+
+        return $this->respondCreated($user->name . '님, 환영합니다.');
     }
 }
